@@ -2,7 +2,7 @@
 
 🔗 **Live Demo:** https://soumya-gupta72.github.io/typing-speed-test/
 
-A responsive typing speed test application built with React.
+A responsive typing speed test application.
 
 ## Features
 
