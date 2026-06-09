@@ -68,4 +68,3 @@ A `data.json` file is provided with passages organized by difficulty. Each passa
 
 The personal best score should persist across browser sessions using `localStorage`. When a user beats their high score, the new value should be saved and displayed on subsequent visits.
 
-**Have fun building!** 🚀
