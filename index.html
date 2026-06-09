@@ -1,57 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
+
   <title>Frontend Mentor | Typing Speed Test</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 0.6875rem; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
+
 <body>
+  <main class="app">
+    <header class="app-header">
+      <img class="app-header__logo app-header__logo--mobile" src="./assets/images/logo-small.svg" alt="TypeMaster"
+        width="120" height="28">
+      <img class="app-header__logo app-header__logo--desktop" src="./assets/images/logo-large.svg" alt="TypeMaster"
+        width="180" height="40">
 
-  Personal best: <!-- PB --> WPM
+      <div class="personal-best">
+        <img class="personal-best__icon" src="./assets/images/icon-personal-best.svg" alt="" width="20" height="20"
+          aria-hidden="true">
+        <p class="personal-best__text">
+          Personal best:
+          <strong class="personal-best__value" id="pb-value">--</strong>
+          WPM
+        </p>
+      </div>
+    </header>
 
-  WPM: <!-- WPM -->
-  Accuracy: <!-- Accuracy -->
-  Time: <!-- Time -->
+    <section class="stats" aria-label="Live statistics">
+      <div class="stat" aria-live="polite">
+        <span class="stat__label">WPM</span>
+        <span class="stat__value" id="stat-wpm">0</span>
+      </div>
 
-  Difficulty:
-  Easy
-  Medium
-  Hard
+      <div class="stat" aria-live="polite">
+        <span class="stat__label">Accuracy</span>
+        <span class="stat__value" id="stat-accuracy">100%</span>
+      </div>
 
-  Mode:
-  Timed (60s)
-  Passage
+      <div class="stat" aria-live="polite">
+        <span class="stat__label">Time</span>
+        <span class="stat__value" id="stat-time">0:00</span>
+      </div>
+    </section>
 
-  <!-- Passage -->
+    <section class="controls" aria-label="Test settings">
+      <fieldset class="controls__group">
+        <legend class="controls__legend">Difficulty</legend>
+        <div class="controls__options">
+          <label class="controls__option">
+            <input type="radio" name="difficulty" value="easy" checked>
+            <span>Easy</span>
+          </label>
+          <label class="controls__option">
+            <input type="radio" name="difficulty" value="medium">
+            <span>Medium</span>
+          </label>
+          <label class="controls__option">
+            <input type="radio" name="difficulty" value="hard">
+            <span>Hard</span>
+          </label>
+        </div>
+      </fieldset>
 
-  Start Typing Test
-  Or click the text and start typing
+      <fieldset class="controls__group">
+        <legend class="controls__legend">Mode</legend>
+        <div class="controls__options">
+          <label class="controls__option">
+            <input type="radio" name="mode" value="timed" checked>
+            <span>Timed (60s)</span>
+          </label>
+          <label class="controls__option">
+            <input type="radio" name="mode" value="passage">
+            <span>Passage</span>
+          </label>
+        </div>
+      </fieldset>
 
-  <!-- Test Complete Start -->
+      <button type="button" class="controls__restart" id="restart-btn" aria-label="Restart test">
+        <img src="./assets/images/icon-restart.svg" alt="" width="20" height="20" aria-hidden="true">
+        <span>Restart</span>
+      </button>
+    </section>
 
-  Test Complete!
-  Solid run. Keep pushing to beat your high score.
+    <div class="typing-zone">
+      <section class="typing-area" aria-label="Typing test">
+        <div class="passage" id="passage" tabindex="0" role="textbox" aria-label="Passage to type" aria-readonly="true">
+        </div>
 
-  WPM: <!-- WPM -->
-  Accuracy: <!-- Accuracy -->
-  Characters: <!-- Correct/Incorrect -->
+        <input type="text" class="typing-input" id="typing-input" autocomplete="off" autocorrect="off"
+          autocapitalize="off" spellcheck="false" aria-label="Hidden typing input">
+      </section>
 
-  Go Again
-  
-  <!-- Test Complete End -->
+      <section class="start-prompt" id="start-prompt" aria-label="Start test">
+        <button type="button" class="start-prompt__button" id="start-btn">
+          Start Typing Test
+        </button>
+        <p class="start-prompt__hint">Or click the text and start typing</p>
+      </section>
+    </div>
+
+    <dialog class="results" id="results-dialog" aria-labelledby="results-title">
+      <div class="results__decorations" id="results-decorations" hidden>
+        <img class="results__confetti" src="./assets/images/pattern-confetti.svg" alt="" aria-hidden="true">
+        <img class="results__star results__star--1" src="./assets/images/pattern-star-1.svg" alt="" aria-hidden="true">
+        <img class="results__star results__star--2" src="./assets/images/pattern-star-2.svg" alt="" aria-hidden="true">
+      </div>
+
+      <div class="results__icon" id="results-icon" hidden>
+        <img src="./assets/images/icon-new-pb.svg" alt="" width="48" height="48" aria-hidden="true">
+      </div>
+
+      <h2 class="results__title" id="results-title">Test Complete!</h2>
+      <p class="results__message" id="results-message">
+        Solid run. Keep pushing to beat your high score.
+      </p>
+
+      <dl class="results__stats">
+        <div class="results__stat">
+          <dt class="results__stat-label">WPM</dt>
+          <dd class="results__stat-value" id="results-wpm">0</dd>
+        </div>
+        <div class="results__stat">
+          <dt class="results__stat-label">Accuracy</dt>
+          <dd class="results__stat-value" id="results-accuracy">0%</dd>
+        </div>
+        <div class="results__stat">
+          <dt class="results__stat-label">Characters</dt>
+          <dd class="results__stat-value" id="results-characters">0/0</dd>
+        </div>
+      </dl>
+
+      <button type="button" class="results__button" id="go-again-btn">
+        Go Again
+      </button>
+    </dialog>
+  </main>
 
   <footer class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+    Coded by <a href="#">Soumya</a>.
   </footer>
+
+  <script src="./js/storage.js" defer></script>
+  <script src="./js/stats.js" defer></script>
+  <script src="./js/typing.js" defer></script>
+  <script src="./js/app.js" defer></script>
 </body>
+
 </html>
